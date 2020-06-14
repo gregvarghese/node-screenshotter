@@ -1,8 +1,17 @@
 # node-screenshotter
 A node tool to loop through directories and generate screenshots and thumbs of html file in each folder.  
 
-1. Clone project
-2. Run `npm install`
-3. Run `node app.js`
-4. Enter root folder of project when prompted.
-5. When it's finished, hit ctrl + c to exit
+## Usage
+    1. Clone project
+    2. Run `npm install`
+    3. Run `node app.js`
+    4. Enter root folder of project when prompted.
+    5. When it's finished, hit ctrl + c to exit.
+
+## Requirements
+
+NodeJS > v10
+
+---
+THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
