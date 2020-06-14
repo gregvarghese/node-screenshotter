@@ -71,6 +71,8 @@ function getScreenshot(urls) {
                     sharp(full)
                     .resize(200,150)
                     .toFile(thumb);
+                }).catch( err => {
+                    console.log(err);
                 });
         
                 console.log("Screenshot saved to " + full + ' & ' + thumb);
