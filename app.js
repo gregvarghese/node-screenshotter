@@ -10,22 +10,18 @@ const rl = readline.createInterface({
 });
 
 rl.question("What is the root folder path of the Veeva project? \n", function (name) {
+    
+    name = name.replace(/(\s+)/g, '\\$1');
+
+    console.log(name);
+
     fs.access(name, function (error) {
 
         if (error) {
-            console.log("Directory does not exist.")
+            console.log('Directory '  +  name + '  does not exist.')
         } else {
             dirs = getDirectories(name);
-
-            Object.keys(dirs).forEach(function (key) {
-                var folderName = require('path').basename(val);
-                var val = dirs[key];
-                filename = val + '/' + folderName + '.html';
-                fs.readFile(filename, 'utf8', function (err, data) {
-                    
-                    getScreenshot(filename, val + "/" + folderName + ".jpg", val + "/" + folderName + "_thumb.jpg");
-                });
-            });
+            getScreenshot(dirs);
         }
     });
 });
@@ -44,7 +40,7 @@ function getDirectoriesRecursive(srcpath) {
     return [srcpath, ...flatten(getDirectories(srcpath).map(getDirectoriesRecursive))];
 }
 
-function getScreenshot(path, output, thumb) {
+function getScreenshot(urls) {
     const run = async () => {
         // open the browser and prepare a page
         const browser = await puppeteer.launch()
@@ -56,18 +52,35 @@ function getScreenshot(path, output, thumb) {
             height: 768
         })
 
-        await page.goto('file://' + path, {waitUntil: 'domcontentloaded'})
-        await page.screenshot({
-            path: output,
-            fullPage: false
-        }).then((result) => {
-            sharp(output)
-            .resize(200,150)
-            .toFile(thumb);
-        });
+        for (let i = 0; i < urls.length; i ++) {
+            var val = urls[i];
+            var folderName = require('path').basename(val);
 
-        console.log("Screenshot saved to " + output);
+            filename = val + '/' + folderName + '.html';  
+            let full = val + "/" + folderName + "-full.jpg";
+            let thumb = val + "/" + folderName + "-thumb.jpg";
 
+            if (fs.existsSync(filename)) {
+                console.log('Creating screenshot for ' + val);
+                await page.goto('file://' + filename, {waitUntil: 'domcontentloaded'})
+                await page.screenshot({
+                    path: full,
+                    fullPage: false
+                })
+                .then((result) => {
+                    sharp(full)
+                    .resize(200,150)
+                    .toFile(thumb);
+                });
+        
+                console.log("Screenshot saved to " + full + ' & ' + thumb);
+            }
+            else {
+                console.log(filename + ' does not exist.');
+            }
+        };
+
+        
         // close the browser 
         await browser.close();
 
